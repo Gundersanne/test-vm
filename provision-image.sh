@@ -29,7 +29,7 @@ fi
 mkdir -p "${OUTPUTDIR}"
 
 curl -L "${URL}" -o "${OUTPUTDIR}/${IMAGE}.partial"
-qemu-img resize "${OUTPUTDIR}/${IMAGE}.partial" 10G
+qemu-img resize "${OUTPUTDIR}/${IMAGE}.partial" 30G
 genisoimage \
         -quiet \
 	-input-charset utf-8 \
@@ -38,9 +38,8 @@ genisoimage \
 	-joliet \
 	-rock \
 	ci-provision
-qemu-kvm \
+qemu-system-x86_64 \
 	-m 2048 \
-	-cpu host \
 	-nographic \
 	-cdrom cloudinit.iso \
 	"${OUTPUTDIR}/${IMAGE}.partial"
